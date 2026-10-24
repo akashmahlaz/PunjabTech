@@ -210,6 +210,98 @@ const FeaturedWork = () => {
           </p>
         </motion.div>
 
+
+
+
+        {/* ─────────────────────────────────────────────────────
+            PROJECT 0.1 — MUVXTMS AI
+        ───────────────────────────────────────────────────── */}
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="group mb-20 grid items-center gap-10 md:grid-cols-2 lg:gap-16"
+        >
+          {/* Text — LEFT */}
+          <div className="flex flex-col gap-5 md:order-1">
+            <div className="flex items-center gap-2 text-sm text-primary">
+              <Globe size={16} />
+
+              <span className="font-semibold uppercase tracking-wider">
+                Enterprice Software
+              </span>
+            </div>
+
+            <h3 className="font-heading text-3xl leading-tight md:text-4xl">
+              MUVX-TMS AI
+            </h3>
+
+            <p className="text-lg font-medium italic text-muted-foreground/80">
+              AI Enterprice Software for Trucking Industry
+            </p>
+
+            <p className="leading-relaxed text-muted-foreground">
+              A fully Automonous Trucking industry fleet managment system built for
+              north america industry, enterprice security, ai copilot, workspaces with unlimited members
+            </p>
+
+            <div className="flex flex-wrap gap-2">
+              <Tag label="Enterprice Security" />
+              <Tag label="Claude AI Copilot" />
+              <Tag label="MCP" />
+            </div>
+
+            <div className="flex w-fit items-center gap-2 rounded-lg bg-primary/5 px-4 py-3">
+              <Sparkles size={16} className="text-primary" />
+
+              <span className="text-sm font-semibold">
+                Fully Autonoumous Enterprice AI Powered TMS
+              </span>
+            </div>
+
+            <a
+              href="https://app.muvxtms.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/btn mt-1 flex w-fit items-center gap-2 rounded-full border border-foreground/20 px-6 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary"
+            >
+              Visit Live Site
+
+              <ExternalLink
+                size={16}
+                className="transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5"
+              />
+            </a>
+          </div>
+
+          {/* Iframe — RIGHT */}
+          <div className="relative md:order-2">
+            <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-emerald-500/5 via-transparent to-sky-500/5 blur-2xl" />
+
+            <div className="relative transition-transform duration-700 group-hover:scale-[1.01]">
+              <BrowserFrame
+                url="app.muvxtms.com"
+                variant="light"
+              >
+                <IframePreview
+                  src="https://app.muvxtms.com"
+                  variant="light"
+                  scale={0.65}
+                />
+              </BrowserFrame>
+            </div>
+          </div>
+        </motion.div>
+
+
+
+
+
+
+
+
         {/* ─────────────────────────────────────────────────────
             PROJECT 1 — MOBILE APPS
         ───────────────────────────────────────────────────── */}
