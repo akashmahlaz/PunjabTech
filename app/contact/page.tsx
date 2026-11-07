@@ -6,9 +6,9 @@ import {
   Phone, Mail, MapPin, Clock, Send, CheckCircle2,
   MessageSquare, ArrowRight
 } from "lucide-react";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/app/home/_components/Navbar";
 import Footer from "@/components/Footer";
-import { MailIcon, TwitterIcon, LinkedinIcon, Facebook, Instagram } from "@/components/BrandIcons";
+import { MailIcon, TwitterIcon, LinkedinIcon, Facebook, Instagram } from "@/app/dashboard/_components/BrandIcons";
 
 const contactInfo = [
   { icon: Phone, label: "Phone", value: "+91 78140 02784", href: "https://wa.me/917814002784" },

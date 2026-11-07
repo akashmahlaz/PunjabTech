@@ -6,7 +6,7 @@ import {
   Code2, TrendingUp, MessageCircle,
   Monitor,
 } from "lucide-react";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/app/home/_components/Navbar";
 import Footer from "@/components/Footer";
 
 const stats = [

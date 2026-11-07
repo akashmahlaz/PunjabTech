@@ -1,9 +1,9 @@
 "use client";
-import { Apple, ArrowUpRight, Check, CreditCard, Globe2,  Scale, Users, WalletCards, } from "lucide-react";
+import { Apple, ArrowUpRight, Check, CreditCard, Globe2, Scale, Users, WalletCards, } from "lucide-react";
 
-import SpotlightCard from "@/components/SpotlightCard";
+import SpotlightCard from "@/app/dashboard/_components/SpotlightCard";
 
-const Chip = ({ children, inverted = false, }: { children: React.ReactNode; inverted?: boolean; }) => ( <span className={ inverted ? "rounded-full border border-background/15 bg-background/10 px-2.5 py-1 text-[11px] font-medium text-background/80"  : "rounded-full border border-border bg-background/70 px-2.5 py-1 text-[11px] font-medium text-muted-foreground" } > {children}</span> );
+const Chip = ({ children, inverted = false, }: { children: React.ReactNode; inverted?: boolean; }) => (<span className={inverted ? "rounded-full border border-background/15 bg-background/10 px-2.5 py-1 text-[11px] font-medium text-background/80" : "rounded-full border border-border bg-background/70 px-2.5 py-1 text-[11px] font-medium text-muted-foreground"} > {children}</span>);
 
 
 

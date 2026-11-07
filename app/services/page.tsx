@@ -7,7 +7,7 @@ import {
   Users, Code2, Cloud, Shield, TrendingUp, Rocket, Headphones,
   ArrowRight, Sparkles, MoveRight, ArrowUpRight, ExternalLink
 } from "lucide-react";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/app/home/_components/Navbar";
 import Footer from "@/components/Footer";
 
 const services = [

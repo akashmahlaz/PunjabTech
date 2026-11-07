@@ -6,7 +6,7 @@ import {
   CheckCircle2, ArrowRight, Clock, Users, Target,
   Palette, Smartphone, Globe, BarChart3
 } from "lucide-react";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/app/home/_components/Navbar";
 import Footer from "@/components/Footer";
 
 const timeline = [
