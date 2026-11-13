@@ -7,7 +7,7 @@ import {
   MessageSquare, ArrowRight
 } from "lucide-react";
 import Navbar from "@/app/home/_components/Navbar";
-import Footer from "@/components/Footer";
+import Footer from "../home/_components/Footer";
 import { MailIcon, TwitterIcon, LinkedinIcon, Facebook, Instagram } from "@/app/dashboard/_components/BrandIcons";
 
 const contactInfo = [

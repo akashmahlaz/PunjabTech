@@ -7,7 +7,7 @@ import {
   Monitor,
 } from "lucide-react";
 import Navbar from "@/app/home/_components/Navbar";
-import Footer from "@/components/Footer";
+import Footer from "../home/_components/Footer";
 
 const stats = [
   { value: "50+", label: "Apps Delivered" },

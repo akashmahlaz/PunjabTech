@@ -7,7 +7,7 @@ import {
   Palette, Smartphone, Globe, BarChart3
 } from "lucide-react";
 import Navbar from "@/app/home/_components/Navbar";
-import Footer from "@/components/Footer";
+import Footer from "../home/_components/Footer";
 
 const timeline = [
   {

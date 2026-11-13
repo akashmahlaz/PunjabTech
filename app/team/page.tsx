@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Navbar from "@/app/home/_components/Navbar";
-import Footer from "@/components/Footer";
+import Footer from "../home/_components/Footer";
 import { TwitterIcon, LinkedinIcon, GithubIcon } from "@/app/dashboard/_components/BrandIcons";
 
 interface TeamMember {

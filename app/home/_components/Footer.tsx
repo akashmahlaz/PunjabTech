@@ -3,8 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from "framer-motion";
 import { MessageCircle, ArrowUpRight, Sparkles, MoveRight } from "lucide-react";
-import { Input } from "./ui/input";
-
+import { Input } from "@/components/ui/input";
 const COMPANY_NAME = "Punjab Tech";
 
 const EMAIL = "akashdalla406@gmail.com";

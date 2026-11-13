@@ -8,7 +8,7 @@ import {
   ArrowRight, Sparkles, MoveRight, ArrowUpRight, ExternalLink
 } from "lucide-react";
 import Navbar from "@/app/home/_components/Navbar";
-import Footer from "@/components/Footer";
+import Footer from "../home/_components/Footer";
 
 const services = [
   {
