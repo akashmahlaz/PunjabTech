@@ -25,6 +25,20 @@ export const startupStatusEnum = pgEnum("startup_status", [
     "archived",
 ]);
 
+export const meetingStatusEnum = pgEnum("meeting_status", [
+    "scheduled",
+    "completed",
+    "cancelled",
+    "no_show",
+]);
+
+export const paymentStatusEnum = pgEnum("payment_status", [
+    "pending",
+    "completed",
+    "failed",
+    "refunded",
+]);
+
 export const documentTypeEnum = pgEnum("document_type", [
     "pitch_deck",
     "business_plan",
@@ -284,7 +298,115 @@ export const startup = pgTable(
 
 
 // ============================================================
-// 7. STARTUP DOCUMENTS
+// 7. MEETINGS
+// ============================================================
+
+export const meeting = pgTable(
+    "meeting",
+    {
+        id: uuid("id")
+            .defaultRandom()
+            .primaryKey(),
+
+        startupId: uuid("startup_id")
+            .notNull()
+            .references(() => startup.id, {
+                onDelete: "cascade",
+            }),
+
+        adminId: text("admin_id")
+            .notNull()
+            .references(() => user.id, {
+                onDelete: "restrict",
+            }),
+
+        scheduledAt: timestamp("scheduled_at").notNull(),
+
+        durationMinutes: integer("duration_minutes").default(30).notNull(),
+
+        meetingLink: text("meeting_link"),
+
+        notes: text("notes"),
+
+        status: meetingStatusEnum("status")
+            .default("scheduled")
+            .notNull(),
+
+        completedAt: timestamp("completed_at"),
+
+        createdAt: timestamp("created_at")
+            .defaultNow()
+            .notNull(),
+
+        updatedAt: timestamp("updated_at")
+            .defaultNow()
+            .$onUpdate(() => new Date())
+            .notNull(),
+    },
+    (table) => [
+        index("meeting_startup_idx").on(table.startupId),
+        index("meeting_admin_idx").on(table.adminId),
+        index("meeting_status_idx").on(table.status),
+    ],
+);
+
+
+// ============================================================
+// 8. PAYMENTS
+// ============================================================
+
+export const payment = pgTable(
+    "payment",
+    {
+        id: uuid("id")
+            .defaultRandom()
+            .primaryKey(),
+
+        startupId: uuid("startup_id")
+            .notNull()
+            .references(() => startup.id, {
+                onDelete: "cascade",
+            }),
+
+        userId: text("user_id")
+            .notNull()
+            .references(() => user.id, {
+                onDelete: "restrict",
+            }),
+
+        amountCents: integer("amount_cents").notNull(),
+
+        currency: text("currency").default("usd").notNull(),
+
+        status: paymentStatusEnum("status")
+            .default("pending")
+            .notNull(),
+
+        stripePaymentIntentId: text("stripe_payment_intent_id"),
+
+        description: text("description"),
+
+        paidAt: timestamp("paid_at"),
+
+        createdAt: timestamp("created_at")
+            .defaultNow()
+            .notNull(),
+
+        updatedAt: timestamp("updated_at")
+            .defaultNow()
+            .$onUpdate(() => new Date())
+            .notNull(),
+    },
+    (table) => [
+        index("payment_startup_idx").on(table.startupId),
+        index("payment_user_idx").on(table.userId),
+        index("payment_status_idx").on(table.status),
+    ],
+);
+
+
+// ============================================================
+// 9. STARTUP DOCUMENTS
 // ============================================================
 
 export const startupDocument = pgTable(
