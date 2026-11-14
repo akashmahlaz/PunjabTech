@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth/minimal"
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/lib/db"; //  drizzle instance
-import * as schema from "@/schema"
+import * as schema from "@/drizzle/schema"
 import { admin } from "better-auth/plugins"
 
 
