@@ -613,6 +613,10 @@ export const userRelations = relations(user, ({ many }) => ({
     createdAgreements: many(startupAgreement),
 
     agreementSignatures: many(agreementSignature),
+
+    meetings: many(meeting),
+
+    payments: many(payment),
 }));
 
 
@@ -653,6 +657,10 @@ export const startupRelations = relations(startup, ({ one, many }) => ({
     documents: many(startupDocument),
 
     agreements: many(startupAgreement),
+
+    meetings: many(meeting),
+
+    payments: many(payment),
 }));
 
 
@@ -723,3 +731,33 @@ export const agreementSignatureRelations = relations(
         }),
     }),
 );
+
+// ============================================================
+// 17. MEETING RELATIONS
+// ============================================================
+
+export const meetingRelations = relations(meeting, ({ one }) => ({
+    startup: one(startup, {
+        fields: [meeting.startupId],
+        references: [startup.id],
+    }),
+    admin: one(user, {
+        fields: [meeting.adminId],
+        references: [user.id],
+    }),
+}));
+
+// ============================================================
+// 18. PAYMENT RELATIONS
+// ============================================================
+
+export const paymentRelations = relations(payment, ({ one }) => ({
+    startup: one(startup, {
+        fields: [payment.startupId],
+        references: [startup.id],
+    }),
+    user: one(user, {
+        fields: [payment.userId],
+        references: [user.id],
+    }),
+}));

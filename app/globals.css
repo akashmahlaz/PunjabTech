@@ -1,14 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
   /* ============================================
-     LAUNCHARC DUAL THEME DESIGN SYSTEM
+     MATERIAL 3 EXPRESSIVE & CLEAN LIGHT SYSTEM
      ============================================ */
 
-  /* Typography */
-  --font-display: "DM Serif Display", "Playfair Display", Georgia, serif;
-  --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  /* Typography following Google Fonts Guide */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-heading: "Space Grotesk", "Plus Jakarta Sans", sans-serif;
+  --font-body: "Inter", "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Material 3 Expressive Light Tonal Palette */
+  --color-m3-surface: hsl(0 0% 100%);
+  --color-m3-surface-dim: hsl(220 20% 97%);
+  --color-m3-surface-container: hsl(220 18% 95%);
+  --color-m3-surface-container-high: hsl(220 18% 92%);
+  --color-m3-on-surface: hsl(220 25% 12%);
+  --color-m3-on-surface-variant: hsl(220 10% 40%);
+  --color-m3-outline: hsl(220 12% 86%);
+  --color-m3-outline-variant: hsl(220 15% 92%);
+
+  /* Expressive Primary & Secondary */
+  --color-m3-primary: hsl(22 90% 50%); /* Vibrant Warm Terracotta / Orange */
+  --color-m3-primary-container: hsl(22 100% 95%);
+  --color-m3-on-primary: hsl(0 0% 100%);
+  --color-m3-on-primary-container: hsl(22 95% 25%);
+
+  --color-m3-secondary: hsl(215 25% 27%);
+  --color-m3-secondary-container: hsl(215 30% 94%);
+  --color-m3-on-secondary-container: hsl(215 35% 15%);
+
+  --color-m3-tertiary: hsl(158 64% 42%); /* Expressive Emerald */
+  --color-m3-tertiary-container: hsl(158 75% 94%);
+
+  /* Expressive Rounded Shapes */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+  --radius-full: 9999px;
 
   /* ============================================
      WARM STUDIO CANVAS (Public & Intake)

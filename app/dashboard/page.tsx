@@ -1,37 +1,35 @@
-import { AppSidebar } from "@/app/dashboard/_components/app-sidebar"
-import { ChartAreaInteractive } from "@/app/dashboard/_components/chart-area-interactive"
-import { DataTable } from "@/app/dashboard/_components/data-table"
-import { SectionCards } from "@/app/dashboard/_components/section-cards"
-import { SiteHeader } from "@/app/dashboard/_components/site-header"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { auth } from "@/app/auth/_lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { db } from "@/lib/db";
+import { startup } from "@/drizzle/schema";
+import { eq, desc } from "drizzle-orm";
 
-import data from "./data.json"
+export default async function DashboardPage() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-export default function Page() {
-  return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "calc(var(--spacing) * 72)",
-          "--header-height": "calc(var(--spacing) * 12)",
-        } as React.CSSProperties
-      }
-    >
-      <AppSidebar variant="inset" />
-      <SidebarInset>
-        <SiteHeader />
-        <div className="flex flex-1 flex-col">
-          <div className="@container/main flex flex-1 flex-col gap-2">
-            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              <SectionCards />
-              <div className="px-4 lg:px-6">
-                <ChartAreaInteractive />
-              </div>
-              <DataTable data={data} />
-            </div>
-          </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
-  )
+  if (!session) {
+    redirect("/auth/sign-up");
+  }
+
+  const userRole = (session.user as { role?: string }).role;
+
+  // Strict Role Segregation: Admin must go to admin dashboard
+  if (userRole === "admin") {
+    redirect("/admin/dashboard");
+  }
+
+  // Regular user: find their startup and route deterministically
+  const userStartup = await db.query.startup.findFirst({
+    where: eq(startup.createdByUserId, session.user.id),
+    orderBy: [desc(startup.createdAt)],
+  });
+
+  if (userStartup) {
+    redirect(`/startup/${userStartup.id}`);
+  }
+
+  redirect("/startup/new");
 }

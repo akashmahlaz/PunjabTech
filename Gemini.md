@@ -1,0 +1,5 @@
+Database rule: no jsonblob, always strict tables for everything, 100% data truth, no fake claim with mock , we have 0 mock data policy
+no dark themeing, always unique, professional, clean design which look minimal, clean and professional by following material three expressive guide lines and excessive use of material three compoenents 
+Data of pages should be based on users roles, if role is admin then nobody can open that page if role is user then nonobody can open his page, no one role can access at one time same pages functionalioty
+This rule is hard and follow strictly in any condition: never assume and guess, always use latest and correct docs and code, if you dont know something you cant assume, assuming is prohibited, ask for clarification; or you have to research on google from best resources and then made decisions and then tell in report you made this decision becuase of this.
+user experience and flow is first for us.thanks always give numbered checklist what you have done 
