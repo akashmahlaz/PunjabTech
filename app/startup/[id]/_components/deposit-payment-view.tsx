@@ -80,8 +80,8 @@ export function DepositPaymentView({
       });
 
       if (res.success) {
-        toast.success("Bank Wire reference recorded! Advancing to Cockpit Dashboard.");
-        router.push(`/startup/${startupId}?tab=cockpit`);
+        toast.success("Bank Wire reference recorded! Advancing to Founder Dashboard.");
+        router.push("/dashboard");
         router.refresh();
       } else {
         toast.error(res.error || "Failed to record payment reference.");
@@ -173,10 +173,10 @@ export function DepositPaymentView({
 
           <div className="mt-6 flex items-center justify-end">
             <button
-              onClick={() => router.push(`/startup/${startupId}?tab=cockpit`)}
+              onClick={() => router.push("/dashboard")}
               className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-7 py-3.5 font-['Plus_Jakarta_Sans'] text-sm font-semibold text-white shadow-xs transition hover:bg-neutral-800"
             >
-              Enter Live Startup Cockpit
+              Enter Founder Dashboard
               <ArrowRight className="size-4" />
             </button>
           </div>
@@ -209,10 +209,10 @@ export function DepositPaymentView({
               Refresh Verification Status
             </button>
             <button
-              onClick={() => router.push(`/startup/${startupId}?tab=cockpit`)}
+              onClick={() => router.push("/dashboard")}
               className="inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-5 py-2 font-['Plus_Jakarta_Sans'] text-xs font-semibold text-white hover:bg-neutral-800"
             >
-              <span>View Provisional Cockpit</span>
+              <span>Go to Founder Dashboard</span>
               <ArrowRight className="size-3.5" />
             </button>
           </div>
@@ -288,8 +288,8 @@ export function DepositPaymentView({
                       });
 
                       if (res.success) {
-                        toast.success("PayPal payment confirmed! Cockpit unlocked.");
-                        router.push(`/startup/${startupId}?tab=cockpit`);
+                        toast.success("PayPal payment confirmed! Advancing to Founder Dashboard.");
+                        router.push("/dashboard");
                         router.refresh();
                       } else {
                         toast.error(res.error || "Failed to record payment in database.");

@@ -127,12 +127,15 @@ export default async function StartupPage({
   const isDepositPending = !completedPayment && !!pendingPayment;
   const isCockpitAccessible = isDepositCompleted || isDepositPending;
 
-  // 4. Deterministic Active Stage Routing:
-  // Cockpit (05) > Deposit (04) > Contract (03) > NDA (02) > Meeting (01)
+  // 4. If kickoff deposit is paid or submitted, forward directly to /dashboard
+  if (isCockpitAccessible && (!query.tab || query.tab === "cockpit")) {
+    redirect("/dashboard");
+  }
+
+  // Deterministic Active Stage Routing:
+  // Deposit (04) > Contract (03) > NDA (02) > Meeting (01)
   let defaultTab = "meeting";
-  if (isCockpitAccessible) {
-    defaultTab = "cockpit";
-  } else if (isContractSigned) {
+  if (isContractSigned) {
     defaultTab = "deposit";
   } else if (isNdaSigned) {
     defaultTab = "contract";
@@ -174,18 +177,14 @@ export default async function StartupPage({
         {/* Stage Navigation Pills (Material 3 Expressive Tonal Pills) */}
         {isMeetingCompleted && (
           <div className="mb-8 flex items-center gap-2 overflow-x-auto border-b border-neutral-200/60 pb-3">
-            {/* Stage 05: Cockpit */}
+            {/* Stage 05: Dashboard */}
             {isCockpitAccessible && (
               <Link
-                href={`/startup/${id}?tab=cockpit`}
-                className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 font-['Plus_Jakarta_Sans'] text-xs font-semibold transition ${
-                  activeTab === "cockpit"
-                    ? "bg-neutral-900 text-white shadow-xs"
-                    : "bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-100"
-                }`}
+                href="/dashboard"
+                className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 font-['Plus_Jakarta_Sans'] text-xs font-semibold bg-neutral-900 text-white shadow-xs transition hover:bg-neutral-800"
               >
                 <LayoutDashboard className="size-3.5" />
-                Stage 05: Cockpit Dashboard
+                Stage 05: Founder Dashboard →
               </Link>
             )}
 
