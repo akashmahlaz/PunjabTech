@@ -9,7 +9,9 @@ import {
   CheckCircle2,
   ShieldCheck,
   Loader2,
+  ArrowRight,
 } from "lucide-react";
+import Link from "next/link";
 import { toast } from "sonner";
 import { signNDAAction } from "@/app/startup/actions";
 
@@ -76,7 +78,8 @@ export function NdaSignView({
       });
 
       if (res.success) {
-        toast.success("Mutual NDA executed successfully!");
+        toast.success("Mutual NDA executed successfully! Advancing to Master Contract...");
+        router.push(`/startup/${startupId}?tab=contract`);
         router.refresh();
       } else {
         toast.error(res.error || "Failed to sign NDA.");
@@ -235,18 +238,27 @@ export function NdaSignView({
               </div>
             </div>
 
-            <div className="flex items-center justify-between pt-2">
-              <span className="font-['Inter'] text-xs text-neutral-500">
-                Next Stage: Milestone sprint planning &amp; architectural blueprint delivery.
+            <div className="flex flex-col gap-3 pt-3 sm:flex-row sm:items-center sm:justify-between border-t border-emerald-200/60">
+              <span className="font-['Inter'] text-xs font-medium text-emerald-900">
+                Stage 02 Completed: Mutual NDA is signed. Next: Stage 03 Master Services Agreement.
               </span>
-              <a
-                href={`/api/startup/${startupId}/nda`}
-                download
-                className="inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-5 py-2.5 font-['Plus_Jakarta_Sans'] text-xs font-semibold text-white hover:bg-neutral-800"
-              >
-                <Download className="size-3.5" />
-                Download Signed Copy
-              </a>
+              <div className="flex items-center gap-2">
+                <a
+                  href={`/api/startup/${startupId}/nda`}
+                  download
+                  className="inline-flex items-center gap-1.5 rounded-full border border-neutral-300 bg-white px-4 py-2 font-['Plus_Jakarta_Sans'] text-xs font-semibold text-neutral-700 hover:bg-neutral-50"
+                >
+                  <Download className="size-3.5" />
+                  Download Copy
+                </a>
+                <Link
+                  href={`/startup/${startupId}?tab=contract`}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-5 py-2.5 font-['Plus_Jakarta_Sans'] text-xs font-semibold text-white shadow-xs transition hover:bg-neutral-800"
+                >
+                  <span>Proceed to Stage 03: Master Contract</span>
+                  <ArrowRight className="size-3.5" />
+                </Link>
+              </div>
             </div>
           </div>
         ) : (

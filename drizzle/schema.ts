@@ -384,6 +384,10 @@ export const payment = pgTable(
 
         stripePaymentIntentId: text("stripe_payment_intent_id"),
 
+        paymentMethod: text("payment_method").default("paypal"),
+
+        referenceNumber: text("reference_number"),
+
         description: text("description"),
 
         paidAt: timestamp("paid_at"),
@@ -401,6 +405,90 @@ export const payment = pgTable(
         index("payment_startup_idx").on(table.startupId),
         index("payment_user_idx").on(table.userId),
         index("payment_status_idx").on(table.status),
+    ],
+);
+
+
+// ============================================================
+// 8b. STARTUP MILESTONES (SPRINT TIMELINE)
+// ============================================================
+
+export const startupMilestone = pgTable(
+    "startup_milestone",
+    {
+        id: uuid("id")
+            .defaultRandom()
+            .primaryKey(),
+
+        startupId: uuid("startup_id")
+            .notNull()
+            .references(() => startup.id, {
+                onDelete: "cascade",
+            }),
+
+        phaseNumber: integer("phase_number").notNull(),
+
+        title: text("title").notNull(),
+
+        description: text("description"),
+
+        status: text("status").default("upcoming").notNull(), // 'upcoming' | 'in_progress' | 'completed'
+
+        progressPercentage: integer("progress_percentage").default(0).notNull(),
+
+        targetDate: timestamp("target_date"),
+
+        completedAt: timestamp("completed_at"),
+
+        createdAt: timestamp("created_at")
+            .defaultNow()
+            .notNull(),
+
+        updatedAt: timestamp("updated_at")
+            .defaultNow()
+            .$onUpdate(() => new Date())
+            .notNull(),
+    },
+    (table) => [
+        index("startup_milestone_startup_idx").on(table.startupId),
+    ],
+);
+
+
+// ============================================================
+// 8c. STARTUP ACTIVITY LOG (TRANSPARENT WORK FEED)
+// ============================================================
+
+export const startupActivityLog = pgTable(
+    "startup_activity_log",
+    {
+        id: uuid("id")
+            .defaultRandom()
+            .primaryKey(),
+
+        startupId: uuid("startup_id")
+            .notNull()
+            .references(() => startup.id, {
+                onDelete: "cascade",
+            }),
+
+        adminId: text("admin_id")
+            .references(() => user.id, {
+                onDelete: "set null",
+            }),
+
+        title: text("title").notNull(),
+
+        details: text("details").notNull(),
+
+        category: text("category").default("engineering").notNull(), // 'engineering' | 'architecture' | 'deployment' | 'legal'
+
+        createdAt: timestamp("created_at")
+            .defaultNow()
+            .notNull(),
+    },
+    (table) => [
+        index("startup_activity_startup_idx").on(table.startupId),
     ],
 );
 
@@ -661,6 +749,10 @@ export const startupRelations = relations(startup, ({ one, many }) => ({
     meetings: many(meeting),
 
     payments: many(payment),
+
+    milestones: many(startupMilestone),
+
+    activityLogs: many(startupActivityLog),
 }));
 
 
@@ -758,6 +850,32 @@ export const paymentRelations = relations(payment, ({ one }) => ({
     }),
     user: one(user, {
         fields: [payment.userId],
+        references: [user.id],
+    }),
+}));
+
+// ============================================================
+// 19. MILESTONE RELATIONS
+// ============================================================
+
+export const startupMilestoneRelations = relations(startupMilestone, ({ one }) => ({
+    startup: one(startup, {
+        fields: [startupMilestone.startupId],
+        references: [startup.id],
+    }),
+}));
+
+// ============================================================
+// 20. ACTIVITY LOG RELATIONS
+// ============================================================
+
+export const startupActivityLogRelations = relations(startupActivityLog, ({ one }) => ({
+    startup: one(startup, {
+        fields: [startupActivityLog.startupId],
+        references: [startup.id],
+    }),
+    admin: one(user, {
+        fields: [startupActivityLog.adminId],
         references: [user.id],
     }),
 }));

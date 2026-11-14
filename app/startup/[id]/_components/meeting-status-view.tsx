@@ -11,7 +11,9 @@ import {
   CheckCircle2,
   RefreshCw,
   ArrowRight,
+  ShieldCheck,
 } from "lucide-react";
+import Link from "next/link";
 
 export type MeetingData = {
   id: string;
@@ -40,17 +42,18 @@ export function MeetingStatusView({
   const router = useRouter();
   const [isRefreshing, setIsRefreshing] = useState(false);
 
+  const isMeetingCompleted = meeting?.status === "completed";
   const isMeetingScheduled = !!meeting?.scheduledAt && meeting.status === "scheduled";
 
   useEffect(() => {
-    if (isMeetingScheduled) return;
+    if (isMeetingScheduled || isMeetingCompleted) return;
 
     const interval = setInterval(() => {
       router.refresh();
     }, 8000);
 
     return () => clearInterval(interval);
-  }, [isMeetingScheduled, router]);
+  }, [isMeetingScheduled, isMeetingCompleted, router]);
 
   const handleManualRefresh = () => {
     setIsRefreshing(true);
@@ -64,22 +67,43 @@ export function MeetingStatusView({
       <div className="relative overflow-hidden rounded-3xl border border-neutral-200/80 bg-white p-6 shadow-xs sm:p-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/25 bg-amber-50 px-3.5 py-1 font-['Plus_Jakarta_Sans'] text-xs font-semibold text-amber-800">
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-amber-400 opacity-75"></span>
-                <span className="relative inline-flex size-2 rounded-full bg-amber-500"></span>
-              </span>
-              {isMeetingScheduled ? "Phase 02: Discovery Session Confirmed" : "Phase 01: Intake Review In Progress"}
+            <div className="inline-flex items-center gap-2 rounded-full border px-3.5 py-1 font-['Plus_Jakarta_Sans'] text-xs font-semibold">
+              {isMeetingCompleted ? (
+                <span className="flex items-center gap-1.5 text-emerald-800">
+                  <CheckCircle2 className="size-3.5 text-emerald-600" />
+                  Phase 01 &amp; 02 Complete — Strategy Call Completed
+                </span>
+              ) : isMeetingScheduled ? (
+                <span className="flex items-center gap-1.5 text-amber-800">
+                  <span className="relative flex size-2">
+                    <span className="absolute inline-flex size-full animate-ping rounded-full bg-amber-400 opacity-75"></span>
+                    <span className="relative inline-flex size-2 rounded-full bg-amber-500"></span>
+                  </span>
+                  Phase 02: Discovery Session Confirmed
+                </span>
+              ) : (
+                <span className="flex items-center gap-1.5 text-amber-800">
+                  <span className="relative flex size-2">
+                    <span className="absolute inline-flex size-full animate-ping rounded-full bg-amber-400 opacity-75"></span>
+                    <span className="relative inline-flex size-2 rounded-full bg-amber-500"></span>
+                  </span>
+                  Phase 01: Intake Review In Progress
+                </span>
+              )}
             </div>
 
             <h2 className="font-['Space_Grotesk'] text-2xl font-bold tracking-tight text-neutral-900 sm:text-3xl">
-              {isMeetingScheduled
+              {isMeetingCompleted
+                ? "Discovery call completed & approved"
+                : isMeetingScheduled
                 ? "Your review is complete & call is scheduled"
                 : "Your startup is in process"}
             </h2>
 
             <p className="max-w-2xl font-['Inter'] text-sm leading-relaxed text-neutral-600">
-              {isMeetingScheduled
+              {isMeetingCompleted
+                ? "Your discovery consultation with PunjabTech has been successfully concluded. Advance to Stage 02 to execute the Mutual NDA."
+                : isMeetingScheduled
                 ? "Our technical leadership has completed the initial architectural evaluation. Your founder strategy session is confirmed below."
                 : "We will review research and come back to you. Our engineering team is currently assessing your market positioning, technical stack requirements, and MVP scope."}
             </p>
@@ -212,7 +236,16 @@ export function MeetingStatusView({
 
           {/* Action Button */}
           <div className="flex flex-col items-start gap-2 sm:items-end">
-            {isMeetingScheduled && meeting?.meetingLink ? (
+            {isMeetingCompleted ? (
+              <Link
+                href={`/startup/${startupId}?tab=nda`}
+                className="group inline-flex items-center gap-2 rounded-full bg-neutral-900 px-7 py-4 font-['Plus_Jakarta_Sans'] text-sm font-semibold text-white shadow-xs transition hover:bg-neutral-800"
+              >
+                <ShieldCheck className="size-4 text-emerald-400" />
+                Proceed to Stage 02: Mutual NDA
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            ) : isMeetingScheduled && meeting?.meetingLink ? (
               <a
                 href={meeting.meetingLink}
                 target="_blank"
